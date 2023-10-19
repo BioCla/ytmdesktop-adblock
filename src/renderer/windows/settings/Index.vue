@@ -6,7 +6,10 @@ import Settings from "../../components/Settings.vue";
 <template>
   <div class="container">
     <Suspense>
-      <TitleBar class="titlebar" title="Settings" icon="settings" />
+      <TitleBar
+        class="titlebar" title="Settings" icon="settings" 
+        center-title-text
+      />
     </Suspense>
     <Suspense>
       <Settings class="settings" />
@@ -24,6 +27,6 @@ import Settings from "../../components/Settings.vue";
 .container {
   width: 100%;
   height: 100%;
-  background-color: #000000;
+  background-color: #121212;
 }
 </style>

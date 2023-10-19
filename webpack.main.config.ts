@@ -33,5 +33,9 @@ export const mainConfig: Configuration = {
     },
     extensions: [".js", ".ts", ".jsx", ".tsx", ".css", ".json"]
   },
-  devtool: process.env.NODE_ENV === "development" ? "eval-source-map" : false
+  devtool: process.env.NODE_ENV === "development" ? "eval-source-map" : false,
+  externals: {
+    bufferutil: "bufferutil",
+    "utf-8-validate": "utf-8-validate"
+  }
 };
