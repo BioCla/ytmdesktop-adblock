@@ -19,6 +19,7 @@ import {
 import ElectronStore from "electron-store";
 import log from "electron-log";
 import path from "path";
+import { ElectronBlocker, Request } from '@cliqz/adblocker-electron';
 
 import MemoryStore from "./memory-store";
 import playerStateStore, { PlayerState, VideoState } from "./player-state-store";
@@ -872,6 +873,32 @@ function urlIsGoogleAccountsDomain(url: URL): boolean {
   return false;
 }
 
+function applyAdBlocker(view: BrowserView | BrowserWindow, partition: string): void {
+  ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
+    blocker.enableBlockingInSession(view.webContents.session);
+    blocker.on('request-blocked', (request: Request) => {
+      log.warn(`Blocked: ${request.url} - ${request.tabId}`);
+    });
+    blocker.on('request-redirected', (request: Request) => {
+      log.warn(`Redirected: ${request.url} - ${request.tabId}`);
+    })
+    blocker.on('request-whitelisted', (request: Request) => {
+      log.warn(`Whitelisted: ${request.url} - ${request.tabId}`);
+    })
+    blocker.on('csp-injected', (request: Request) => {
+      log.warn(`CSP: ${request.url} - ${request.tabId}`);
+    })
+    blocker.on('script-injected', (script, url) => {
+      log.warn(`Script Length: ${script.length} - ${url}`);
+    })
+    blocker.on('style-injected', (style, url) => {
+      log.warn(`Style Length: ${style.length} - ${url}`);
+    })
+  }).finally(() => {
+    log.info(`AdBlocker enabled for ${partition}`);
+  });
+}
+
 const createYTMView = (): void => {
   memoryStore.set("ytmViewLoadTimedout", false);
   memoryStore.set("ytmViewLoading", true);
@@ -886,6 +913,9 @@ const createYTMView = (): void => {
       autoplayPolicy: store.get("playback.continueWhereYouLeftOffPaused") ? "document-user-activation-required" : "no-user-gesture-required"
     }
   });
+
+  applyAdBlocker(ytmView, "persist:ytmview");
+
   companionServer.provide(store, memoryStore, ytmView);
   customCss.provide(store, ytmView);
   ratioVolume.provide(ytmView);
@@ -1092,6 +1122,13 @@ const createMainWindow = (): void => {
       devTools: store.get("developer.enableDevTools")
     }
   });
+
+  /**
+   * This doesn't seem necessary as the main window shouldn't receive "ads" or "tracking" requests.
+   * But imma keep it here just in case.
+   */
+  applyAdBlocker(mainWindow, "persist:main");
+
   const windowMaximized = store.get("state").windowMaximized;
   // Even though bounds are set when creating the main window we set the bounds again to fix scaling issues. This is classified as an upstream chromium bug.
   if (windowBounds) {
@@ -1594,7 +1631,6 @@ app.on("ready", () => {
       }
     }
   });
-
   log.info("Created tray icon");
 
   createMainWindow();

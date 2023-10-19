@@ -4,7 +4,7 @@ import { FastifyPluginCallback, FastifyPluginOptions } from "fastify";
 import { StoreSchema } from "~shared/store/schema";
 import playerStateStore, { PlayerState, RepeatMode } from "../../../../player-state-store";
 import { createAuthToken, getIsTemporaryAuthCodeValidAndRemove, getTemporaryAuthCode, isAuthValid, isAuthValidMiddleware } from "../../api-shared/auth";
-import fastifyRateLimit from "@fastify/rate-limit";
+import { fastifyRateLimit } from "@fastify/rate-limit";
 import crypto from "crypto";
 import {
   APIV1CommandRequestBody,
@@ -39,28 +39,28 @@ const transformPlayerState = (state: PlayerState) => {
       videoProgress: state.videoProgress,
       queue: state.queue
         ? {
-            autoplay: state.queue.autoplay,
-            items: state.queue.items,
-            automixItems: state.queue.automixItems,
-            isGenerating: state.queue.isGenerating,
-            isInfinite: state.queue.isInfinite,
-            repeatMode: state.queue.repeatMode,
-            selectedItemIndex: state.queue.selectedItemIndex
-          }
+          autoplay: state.queue.autoplay,
+          items: state.queue.items,
+          automixItems: state.queue.automixItems,
+          isGenerating: state.queue.isGenerating,
+          isInfinite: state.queue.isInfinite,
+          repeatMode: state.queue.repeatMode,
+          selectedItemIndex: state.queue.selectedItemIndex
+        }
         : null
     },
     video: state.videoDetails
       ? {
-          author: state.videoDetails.author,
-          channelId: state.videoDetails.channelId,
-          title: state.videoDetails.title,
-          album: state.videoDetails.album,
-          albumId: state.videoDetails.albumId,
-          likeStatus: state.videoDetails.likeStatus,
-          thumbnails: state.videoDetails.thumbnails,
-          durationSeconds: state.videoDetails.durationSeconds,
-          id: state.videoDetails.id
-        }
+        author: state.videoDetails.author,
+        channelId: state.videoDetails.channelId,
+        title: state.videoDetails.title,
+        album: state.videoDetails.album,
+        albumId: state.videoDetails.albumId,
+        likeStatus: state.videoDetails.likeStatus,
+        thumbnails: state.videoDetails.thumbnails,
+        durationSeconds: state.videoDetails.durationSeconds,
+        id: state.videoDetails.id
+      }
       : null,
     // API Users:
     // WARNING! WARNING! WARNING! WARNING!

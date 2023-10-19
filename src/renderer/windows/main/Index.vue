@@ -29,12 +29,13 @@ onMounted(() => {
     <TitleBar
       is-main-window
       has-home-button
+      center-title-text
       has-settings-button
       has-minimize-button
       has-maximize-button
-      title="YouTube Music Desktop App"
-      :icon-file="require('~assets/icons/ytmd_white.png')"
-    />
+      title="YouTube Music Desktop"
+      />
+      <!-- :icon-file="require('~assets/icons/ytmd_white.png')" -->
   </Suspense>
   <Suspense>
     <YTMViewLoading />

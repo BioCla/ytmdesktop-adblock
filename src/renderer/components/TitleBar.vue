@@ -125,7 +125,7 @@ if (props.isMainWindow) {
   height: 36px;
   user-select: none;
   -webkit-app-region: drag;
-  background-color: #000000;
+  background-color: #121212;
   display: flex;
   align-items: center;
   justify-content: space-between;
