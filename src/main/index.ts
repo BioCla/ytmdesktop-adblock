@@ -877,22 +877,22 @@ function applyAdBlocker(view: BrowserView | BrowserWindow, partition: string): v
   ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
     blocker.enableBlockingInSession(view.webContents.session);
     blocker.on('request-blocked', (request: Request) => {
-      log.warn(`Blocked: ${request.url} - ${request.tabId}`);
+      log.warn(`[${partition}][${request.tabId}] Blocked: ${request.url}`);
     });
     blocker.on('request-redirected', (request: Request) => {
-      log.warn(`Redirected: ${request.url} - ${request.tabId}`);
+      log.warn(`[${partition}][${request.tabId}] Redirected: ${request.url}`);
     })
     blocker.on('request-whitelisted', (request: Request) => {
-      log.warn(`Whitelisted: ${request.url} - ${request.tabId}`);
+      log.warn(`[${partition}][${request.tabId}] Whitelisted: ${request.url}`);
     })
     blocker.on('csp-injected', (request: Request) => {
-      log.warn(`CSP: ${request.url} - ${request.tabId}`);
+      log.warn(`[${partition}][${request.tabId}] CSP: ${request.url}`);
     })
     blocker.on('script-injected', (script, url) => {
-      log.warn(`Script Length: ${script.length} - ${url}`);
+      log.warn(`[${partition}] URL: ${url}\nScript Length: ${script.length}`);
     })
     blocker.on('style-injected', (style, url) => {
-      log.warn(`Style Length: ${style.length} - ${url}`);
+      log.warn(`[${partition}] URL: ${url}\nStyle Length: ${style.length}`);
     })
   }).finally(() => {
     log.info(`AdBlocker enabled for ${partition}`);
