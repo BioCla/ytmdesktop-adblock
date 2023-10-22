@@ -41,12 +41,15 @@ declare const SETTINGS_WINDOW_WEBPACK_ENTRY: string;
 declare const SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 declare const YTM_VIEW_PRELOAD_WEBPACK_ENTRY: string;
 
+declare const YTMD_DISABLE_UPDATES: boolean;
+
 const assetFolder = path.join(process.env.NODE_ENV === "development" ? path.join(app.getAppPath(), "src/assets") : process.resourcesPath);
 
 let applicationExited = false;
 let applicationQuitting = false;
 let appUpdateAvailable = false;
 let appUpdateDownloaded = false;
+let appLaunchUpdateCheck = true;
 
 let stateSaverInterval: NodeJS.Timeout | null = null;
 
@@ -134,6 +137,8 @@ const discordPresence = new DiscordPresence();
 const lastFMScrobbler = new LastFM();
 const nowPlayingNotifications = new NowPlayingNotifications();
 const ratioVolume = new VolumeRatio();
+
+const ytmViewIntegrationScripts: { [name: string]: { [name: string]: string } } = {};
 
 let mainWindow: BrowserWindow = null;
 let settingsWindow: BrowserWindow = null;
@@ -225,9 +230,14 @@ memoryStore.onStateChanged((newState, oldState) => {
 });
 log.info("Created memory store");
 
+function shouldDisableUpdates() {
+  // macOS can't have auto updates without a code signature
+  if (process.platform === "darwin") return true;
+}
+
 // Configure the autoupdater
 // macOS cannot use the autoUpdater without a code signature at this time
-if (process.platform !== "darwin") {
+if (app.isPackaged && !shouldDisableUpdates() && !YTMD_DISABLE_UPDATES) {
   const updateServer = "https://update.electronjs.org";
   const updateFeed = `${updateServer}/ytmdesktop/ytmdesktop/${process.platform}-${process.arch}/${app.getVersion()}`;
 
@@ -235,38 +245,35 @@ if (process.platform !== "darwin") {
     url: updateFeed
   });
   autoUpdater.on("checking-for-update", () => {
-    if (settingsWindow) {
-      settingsWindow.webContents.send("app:checkingForUpdates");
-    }
+    if (appLaunchUpdateCheck) memoryStore.set("ytmViewLoadingStatus", "Checking for updates...");
+    if (settingsWindow) settingsWindow.webContents.send("app:checkingForUpdates");
   });
   autoUpdater.on("update-available", () => {
     log.info("Application update available");
     memoryStore.set("appUpdateAvailable", true);
     appUpdateAvailable = true;
-    if (settingsWindow) {
-      settingsWindow.webContents.send("app:updateAvailable");
-    }
+    if (appLaunchUpdateCheck) memoryStore.set("ytmViewLoadingStatus", "Downloading update...");
+    if (settingsWindow) settingsWindow.webContents.send("app:updateAvailable");
   });
   autoUpdater.on("update-not-available", () => {
-    if (settingsWindow) {
-      settingsWindow.webContents.send("app:updateNotAvailable");
-    }
+    if (appLaunchUpdateCheck) appLaunchUpdateCheck = false;
+    if (settingsWindow) settingsWindow.webContents.send("app:updateNotAvailable");
   });
   autoUpdater.on("update-downloaded", () => {
     log.info("Application update downloaded");
     appUpdateDownloaded = true;
     memoryStore.set("appUpdateDownloaded", true);
-    if (settingsWindow) {
-      settingsWindow.webContents.send("app:updateDownloaded");
-    }
+    if (appLaunchUpdateCheck) autoUpdater.quitAndInstall();
+    if (settingsWindow) settingsWindow.webContents.send("app:updateDownloaded");
   });
   log.info("Setup application updater");
-  /*
-  TEMPORARY UPDATE CHECK DISABLE WHILE DEVELOPMENT OCCURS (This will always have errors for now until a release occurs)
-  setInterval(() => {
-    autoUpdater.checkForUpdates()
-  }, 1000 * 60 * 10);
-  */
+
+  setInterval(
+    () => {
+      autoUpdater.checkForUpdates();
+    },
+    1000 * 60 * 15
+  );
 } else {
   memoryStore.set("autoUpdaterDisabled", true);
 }
@@ -1138,10 +1145,6 @@ const createMainWindow = (): void => {
     mainWindow.maximize();
   }
 
-  // Create the YouTube Music view
-  createYTMView();
-  log.info("Created YTM view");
-
   // Attach events to main window
   mainWindow.on("resize", () => {
     setTimeout(() => {
@@ -1236,7 +1239,7 @@ const createMainWindow = (): void => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", () => {
+app.on("ready", async () => {
   log.info("Application ready");
 
   if (!safeStorage.isEncryptionAvailable()) {
@@ -1355,6 +1358,11 @@ app.on("ready", () => {
           mode: "detach"
         });
       }
+
+      // TODO: this is just a hack fix for ratio volume to run the enable script
+      ratioVolume.ytmViewLoaded();
+      // TODO: this is just a hack fix for custom css to update CSS when the view loads
+      customCss.updateCSS();
     }
   });
 
@@ -1435,6 +1443,12 @@ app.on("ready", () => {
       ytmView = null;
       createYTMView();
     }
+  });
+
+  ipcMain.handle("ytmView:getIntegrationScripts", event => {
+    if (event.sender !== ytmView.webContents) return;
+
+    return ytmViewIntegrationScripts;
   });
 
   // Handle memory store ipc
@@ -1635,6 +1649,31 @@ app.on("ready", () => {
 
   createMainWindow();
   log.info("Created main window");
+
+  memoryStore.set("ytmViewLoading", true);
+  memoryStore.set("ytmViewLoadingStatus", "Checking for updates...");
+
+  // Check for application updates
+  if (app.isPackaged && !YTMD_DISABLE_UPDATES) {
+    await new Promise<void>(resolve => {
+      setInterval(() => {
+        if (!appLaunchUpdateCheck) resolve();
+      }, 250);
+    });
+    autoUpdater.checkForUpdates();
+  } else {
+    appLaunchUpdateCheck = false;
+  }
+
+  // Integrations preflight initialization
+  ytmViewIntegrationScripts["ratioVolume"] = ratioVolume.getYTMScripts().reduce<{ [name: string]: string }>((map, obj) => {
+    map[obj.name] = obj.script;
+    return map;
+  }, {});
+
+  // Create the YouTube Music view
+  createYTMView();
+  log.info("Created YTM view");
 
   // Setup taskbar features
   setupTaskbarFeatures();

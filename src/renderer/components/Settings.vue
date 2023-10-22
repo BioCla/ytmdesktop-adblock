@@ -8,7 +8,7 @@ declare const YTMD_GIT_COMMIT_HASH: string;
 declare const YTMD_GIT_BRANCH: string;
 
 const ytmdVersion = await window.ytmd.getAppVersion();
-const ytmdCommitHash = YTMD_GIT_COMMIT_HASH.substring(0, 6);
+const ytmdCommitHash = YTMD_GIT_COMMIT_HASH.substring(0, 7);
 const ytmdBranch = YTMD_GIT_BRANCH;
 
 const isDarwin = window.ytmd.isDarwin;
@@ -528,7 +528,7 @@ window.ytmd.handleUpdateDownloaded(() => {
           </template>
           <template v-if="autoUpdaterDisabled">
             <button disabled class="update-check-button"><span class="material-symbols-outlined">update</span>Check for updates</button>
-            <p class="no-auto-updater">Auto updater unavailable for your system at this time</p>
+            <p class="no-auto-updater">Auto updater disabled</p>
           </template>
           <span class="version-info">
             <p class="version">Version: {{ ytmdVersion }}</p>
