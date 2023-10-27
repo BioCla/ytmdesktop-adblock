@@ -15,7 +15,7 @@
     focused: false,
     iconPosition: "icon-only",
     onTap: function () {
-      var closePopoupEvent = {
+      var closePopupEvent = {
         bubbles: true,
         cancelable: false,
         composed: true,
@@ -44,7 +44,7 @@
           returnValue: []
         }
       };
-      this.dispatchEvent(new CustomEvent("yt-action", closePopoupEvent));
+      this.dispatchEvent(new CustomEvent("yt-action", closePopupEvent));
       this.dispatchEvent(new CustomEvent("yt-action", feedbackEvent));
       document.querySelector("ytmusic-player-bar").store.dispatch({
         type: "SET_FEEDBACK_TOGGLE_STATE",
@@ -65,7 +65,7 @@
     focused: false,
     iconPosition: "icon-only",
     onTap: function () {
-      var closePopoupEvent = {
+      var closePopupEvent = {
         bubbles: true,
         cancelable: false,
         composed: true,
@@ -95,7 +95,7 @@
           returnValue
         }
       };
-      this.dispatchEvent(new CustomEvent("yt-action", closePopoupEvent));
+      this.dispatchEvent(new CustomEvent("yt-action", closePopupEvent));
       this.dispatchEvent(new CustomEvent("yt-action", serviceRequestEvent));
       returnValue[0].ajaxPromise.then(
         response => {
@@ -121,7 +121,7 @@
             }
           };
           this.dispatchEvent(new CustomEvent("yt-action", addToPlaylistEvent));
-          this.dispatchEvent(new CustomEvent("yt-action", closePopoupEvent));
+          this.dispatchEvent(new CustomEvent("yt-action", closePopupEvent));
         },
         () => {
           // service request errored
@@ -136,7 +136,7 @@
   libraryButton.insertAdjacentElement("afterend", playlistButton);
 
   document.querySelector("ytmusic-player-bar").playerApi.addEventListener("onVideoDataChange", event => {
-    if (event.type === "dataloaded" && event.playertype === 1) {
+    if (event.playertype === 1 && (event.type === "dataloaded" || event.type === "dataupdated")) {
       currentVideoId = document.querySelector("ytmusic-player-bar").playerApi.getPlayerResponse().videoDetails.videoId;
     }
   });
@@ -478,6 +478,7 @@
         playlistButton.classList.remove("hidden");
       }
 
+      let foundLibraryButton = false;
       for (let i = 0; i < currentMenu.items.length; i++) {
         const item = currentMenu.items[i];
         if (item.toggleMenuServiceItemRenderer) {
@@ -485,6 +486,7 @@
             item.toggleMenuServiceItemRenderer.defaultIcon.iconType === "LIBRARY_SAVED" ||
             item.toggleMenuServiceItemRenderer.defaultIcon.iconType === "LIBRARY_ADD"
           ) {
+            foundLibraryButton = true;
             libraryFeedbackDefaultToken = item.toggleMenuServiceItemRenderer.defaultServiceEndpoint.feedbackEndpoint.feedbackToken;
             libraryFeedbackToggledToken = item.toggleMenuServiceItemRenderer.toggledServiceEndpoint.feedbackEndpoint.feedbackToken;
 
@@ -512,13 +514,18 @@
                 libraryButton.set("icon", "yt-sys-icons:library_add");
               }
             }
-
-            if (libraryButton.classList.contains("hidden")) {
-              libraryButton.classList.remove("hidden");
-            }
-
             break;
           }
+        }
+      }
+      
+      if (!foundLibraryButton) {
+        if (!libraryButton.classList.contains("hidden")) {
+          libraryButton.classList.add("hidden");
+        }
+      } else {
+        if (libraryButton.classList.contains("hidden")) {
+          libraryButton.classList.remove("hidden");
         }
       }
     } else {

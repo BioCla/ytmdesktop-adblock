@@ -43,7 +43,7 @@
 - Binaries: <https://github.com/ytmdesktop/ytmdesktop/releases>
 
 # Developing
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js (v18)](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js (v20)](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
 ```sh
 # Clone this repository
@@ -53,8 +53,8 @@ cd ytmdesktop
 ```
 ##### And:
 ```sh
-# If you do not have Yarn Installed / New to Node as a whole please install Yarn with:
-npm install yarn --global
+# If you do not have Yarn Installed / New to Node as a whole you can enable Yarn with:
+corepack enable
 
 # Install dependencies
 yarn install
