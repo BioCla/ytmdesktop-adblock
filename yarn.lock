@@ -132,7 +132,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/cli@npm:^6.3.0":
+"@electron-forge/cli@npm:~6.3.0":
   version: 6.3.0
   resolution: "@electron-forge/cli@npm:6.3.0"
   dependencies:
@@ -223,7 +223,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-deb@npm:^6.3.0":
+"@electron-forge/maker-deb@npm:~6.3.0":
   version: 6.3.0
   resolution: "@electron-forge/maker-deb@npm:6.3.0"
   dependencies:
@@ -237,7 +237,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-rpm@npm:^6.3.0":
+"@electron-forge/maker-rpm@npm:~6.3.0":
   version: 6.3.0
   resolution: "@electron-forge/maker-rpm@npm:6.3.0"
   dependencies:
@@ -251,7 +251,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-squirrel@npm:^6.3.0":
+"@electron-forge/maker-squirrel@npm:~6.3.0":
   version: 6.3.0
   resolution: "@electron-forge/maker-squirrel@npm:6.3.0"
   dependencies:
@@ -266,7 +266,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-zip@npm:^6.3.0":
+"@electron-forge/maker-zip@npm:~6.3.0":
   version: 6.3.0
   resolution: "@electron-forge/maker-zip@npm:6.3.0"
   dependencies:
@@ -279,7 +279,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/plugin-auto-unpack-natives@npm:^6.3.0":
+"@electron-forge/plugin-auto-unpack-natives@npm:~6.3.0":
   version: 6.3.0
   resolution: "@electron-forge/plugin-auto-unpack-natives@npm:6.3.0"
   dependencies:
@@ -298,7 +298,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/plugin-webpack@npm:^6.3.0":
+"@electron-forge/plugin-fuses@npm:~6.3.0":
+  version: 6.3.0
+  resolution: "@electron-forge/plugin-fuses@npm:6.3.0"
+  dependencies:
+    "@electron-forge/plugin-base": "npm:6.3.0"
+    "@electron-forge/shared-types": "npm:6.3.0"
+  peerDependencies:
+    "@electron/fuses": ">=1.0.0"
+  checksum: c3a11df9b8b69abf8b999cca634872fd35c732c09f4422f2d438439bfb4e7841a31c7f34f5e535d2868abeee1eebe5358c6eddd21854837b82df0454ea284ee0
+  languageName: node
+  linkType: hard
+
+"@electron-forge/plugin-webpack@npm:~6.3.0":
   version: 6.3.0
   resolution: "@electron-forge/plugin-webpack@npm:6.3.0"
   dependencies:
@@ -326,7 +338,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/publisher-github@npm:^6.3.0":
+"@electron-forge/publisher-github@npm:~6.3.0":
   version: 6.3.0
   resolution: "@electron-forge/publisher-github@npm:6.3.0"
   dependencies:
@@ -424,6 +436,19 @@ __metadata:
   bin:
     asar: bin/asar.js
   checksum: 22cdef5ad3d71a1cdce85f12d9dd674f5fd58f1d91d8a72ef64c5887b9bd075bf676341bcdc85de91f4218cccf3ed35a6eaebf68813a0c83579947901ee301e2
+  languageName: node
+  linkType: hard
+
+"@electron/fuses@npm:^1.6.2":
+  version: 1.6.2
+  resolution: "@electron/fuses@npm:1.6.2"
+  dependencies:
+    chalk: "npm:^4.1.1"
+    fs-extra: "npm:^9.0.1"
+    minimist: "npm:^1.2.5"
+  bin:
+    electron-fuses: dist/bin.js
+  checksum: 00f671fdce1655bb3582775c7436417686287c6a2b113ae4e1e84adf581e6380266a29b26e69d967dee0984109cfa9933f12358c3def43c7439c9235d3f199e3
   languageName: node
   linkType: hard
 
@@ -2587,7 +2612,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^4.0.0, chalk@npm:^4.1.0, chalk@npm:^4.1.2":
+"chalk@npm:^4.0.0, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -6422,7 +6447,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.0, minimist@npm:^1.2.6":
+"minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 908491b6cc15a6c440ba5b22780a0ba89b9810e1aea684e253e43c4e3b8d56ec1dcdd7ea96dde119c29df59c936cde16062159eae4225c691e19c70b432b6e6f
@@ -9905,14 +9930,16 @@ __metadata:
   resolution: "youtube-music-desktop-app@workspace:."
   dependencies:
     "@cliqz/adblocker-electron": "npm:^1.26.9"
-    "@electron-forge/cli": "npm:^6.3.0"
-    "@electron-forge/maker-deb": "npm:^6.3.0"
-    "@electron-forge/maker-rpm": "npm:^6.3.0"
-    "@electron-forge/maker-squirrel": "npm:^6.3.0"
-    "@electron-forge/maker-zip": "npm:^6.3.0"
-    "@electron-forge/plugin-auto-unpack-natives": "npm:^6.3.0"
-    "@electron-forge/plugin-webpack": "npm:^6.3.0"
-    "@electron-forge/publisher-github": "npm:^6.3.0"
+    "@electron-forge/cli": "npm:~6.3.0"
+    "@electron-forge/maker-deb": "npm:~6.3.0"
+    "@electron-forge/maker-rpm": "npm:~6.3.0"
+    "@electron-forge/maker-squirrel": "npm:~6.3.0"
+    "@electron-forge/maker-zip": "npm:~6.3.0"
+    "@electron-forge/plugin-auto-unpack-natives": "npm:~6.3.0"
+    "@electron-forge/plugin-fuses": "npm:~6.3.0"
+    "@electron-forge/plugin-webpack": "npm:~6.3.0"
+    "@electron-forge/publisher-github": "npm:~6.3.0"
+    "@electron/fuses": "npm:^1.6.2"
     "@fastify/cors": "npm:^8.4.0"
     "@fastify/error": "npm:^3.4.0"
     "@fastify/rate-limit": "npm:^8.0.3"
