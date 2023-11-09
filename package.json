@@ -61,7 +61,7 @@
     "webpack": "^5.89.0"
   },
   "dependencies": {
-    "@cliqz/adblocker-electron": "^1.26.9",
+    "@cliqz/adblocker-electron": "^1.26.11",
     "@fastify/cors": "^8.4.0",
     "@fastify/error": "^3.4.0",
     "@fastify/rate-limit": "^8.0.3",
@@ -82,5 +82,5 @@
       "eslint --cache --fix"
     ]
   },
-  "packageManager": "yarn@4.0.0"
+  "packageManager": "yarn@4.0.1"
 }

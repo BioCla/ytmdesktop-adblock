@@ -67,59 +67,59 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cliqz/adblocker-content@npm:^1.26.9":
-  version: 1.26.9
-  resolution: "@cliqz/adblocker-content@npm:1.26.9"
+"@cliqz/adblocker-content@npm:^1.26.11":
+  version: 1.26.11
+  resolution: "@cliqz/adblocker-content@npm:1.26.11"
   dependencies:
-    "@cliqz/adblocker-extended-selectors": "npm:^1.26.9"
-  checksum: 511bb8994144c25f30b0c2bf3b306e8d058347f0c4464f09a11e82fafd60eeb865f30bfe65f129684d07e735dc7b67d2ce22c418341f9e5fbf754525978e4637
+    "@cliqz/adblocker-extended-selectors": "npm:^1.26.11"
+  checksum: b76cca8436aaf828471ac15f010a27f8e07cd3b3a9269182c03f85aa5db060bb0fba25c4dbe93f499cd7d50382b59a2a8cd6322b3da11ba09cd3143546748aa9
   languageName: node
   linkType: hard
 
-"@cliqz/adblocker-electron-preload@npm:^1.26.9":
-  version: 1.26.9
-  resolution: "@cliqz/adblocker-electron-preload@npm:1.26.9"
+"@cliqz/adblocker-electron-preload@npm:^1.26.11":
+  version: 1.26.11
+  resolution: "@cliqz/adblocker-electron-preload@npm:1.26.11"
   dependencies:
-    "@cliqz/adblocker-content": "npm:^1.26.9"
+    "@cliqz/adblocker-content": "npm:^1.26.11"
   peerDependencies:
     electron: ">11"
-  checksum: 15e4c21a9e335e5611f650db975a6462735d87c011290b1b6ffbb44ee66c7dc10ec610b0f3e3678cee4078e9e95bc3ec9616bb21fee179f91ef7e1648d529d0d
+  checksum: 30bc784d752396e92fa0bce624a5ded3654554faef5db9c0d9566d15f90d73959c9091f80110b36b1b8501ee773244e0aabd58258aaa028e5fe205f16b0289cc
   languageName: node
   linkType: hard
 
-"@cliqz/adblocker-electron@npm:^1.26.9":
-  version: 1.26.9
-  resolution: "@cliqz/adblocker-electron@npm:1.26.9"
+"@cliqz/adblocker-electron@npm:^1.26.11":
+  version: 1.26.11
+  resolution: "@cliqz/adblocker-electron@npm:1.26.11"
   dependencies:
-    "@cliqz/adblocker": "npm:^1.26.9"
-    "@cliqz/adblocker-electron-preload": "npm:^1.26.9"
+    "@cliqz/adblocker": "npm:^1.26.11"
+    "@cliqz/adblocker-electron-preload": "npm:^1.26.11"
     tldts-experimental: "npm:^6.0.14"
   peerDependencies:
     electron: ">11"
-  checksum: d90d94fa9e90b0ebbec49a9039a6a8d8eec04946217ffa618f38266983211cbaa910f61e989fd968d55886d6b924f7e1e52d34c91e5873fce4edab2a0c23bb05
+  checksum: 3adc03264212168459c435e3b4eb1a19bfb6f02ef5f3fc95aea428ea0d051ec529e531110a27dbd758041ed0265630f7e2e44877f541c6b859ba0c3b6dda8cfd
   languageName: node
   linkType: hard
 
-"@cliqz/adblocker-extended-selectors@npm:^1.26.9":
-  version: 1.26.9
-  resolution: "@cliqz/adblocker-extended-selectors@npm:1.26.9"
-  checksum: f3938d9c9abc6b60f74411e48751cfb346dce5d0ac38c4dec180196618dec890ddb26a49bcf0c07940b9286d8824bfdd09902495d41bd5f5a88924e4354d37c5
+"@cliqz/adblocker-extended-selectors@npm:^1.26.11":
+  version: 1.26.11
+  resolution: "@cliqz/adblocker-extended-selectors@npm:1.26.11"
+  checksum: e0b37ea847a81fd6a67044e2340a9619abfc3297e1babd54dd8e7bdd8e53275900a17c2cba1dbbb16dcb52d114f46cf819a5c28ccd3fdefd231e024ad3f797e1
   languageName: node
   linkType: hard
 
-"@cliqz/adblocker@npm:^1.26.9":
-  version: 1.26.9
-  resolution: "@cliqz/adblocker@npm:1.26.9"
+"@cliqz/adblocker@npm:^1.26.11":
+  version: 1.26.11
+  resolution: "@cliqz/adblocker@npm:1.26.11"
   dependencies:
-    "@cliqz/adblocker-content": "npm:^1.26.9"
-    "@cliqz/adblocker-extended-selectors": "npm:^1.26.9"
+    "@cliqz/adblocker-content": "npm:^1.26.11"
+    "@cliqz/adblocker-extended-selectors": "npm:^1.26.11"
     "@remusao/guess-url-type": "npm:^1.2.1"
     "@remusao/small": "npm:^1.2.1"
     "@remusao/smaz": "npm:^1.9.1"
     "@types/chrome": "npm:^0.0.248"
     "@types/firefox-webext-browser": "npm:^111.0.2"
     tldts-experimental: "npm:^6.0.14"
-  checksum: 743c0f130e07901269b863fc4f9684e07fa0a4efb385b25dd9203a9b2222e0f181bdc04fa423b07d0dbb5b227230fbc86e8b8de813fe1f4e214f5dd06d283399
+  checksum: 5deee236d5b90f1997a80cbe52104e1f6b45387a755357c2448c6b0d6c77ab4419c391d78bb0c1bf3b489e0df55b42d1bbd485a231de54afcc840e880357dee9
   languageName: node
   linkType: hard
 
@@ -9929,7 +9929,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "youtube-music-desktop-app@workspace:."
   dependencies:
-    "@cliqz/adblocker-electron": "npm:^1.26.9"
+    "@cliqz/adblocker-electron": "npm:^1.26.11"
     "@electron-forge/cli": "npm:~6.3.0"
     "@electron-forge/maker-deb": "npm:~6.3.0"
     "@electron-forge/maker-rpm": "npm:~6.3.0"
