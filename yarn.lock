@@ -87,7 +87,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cliqz/adblocker-electron@npm:^1.26.11":
+"@cliqz/adblocker-electron@npm:^1.26.12":
   version: 1.26.12
   resolution: "@cliqz/adblocker-electron@npm:1.26.12"
   dependencies:
@@ -9926,7 +9926,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "youtube-music-desktop-app@workspace:."
   dependencies:
-    "@cliqz/adblocker-electron": "npm:^1.26.11"
+    "@cliqz/adblocker-electron": "npm:^1.26.12"
     "@electron-forge/cli": "npm:~6.3.0"
     "@electron-forge/maker-deb": "npm:~6.3.0"
     "@electron-forge/maker-rpm": "npm:~6.3.0"
