@@ -89,7 +89,8 @@ const config: ForgeConfig = {
             name: "main_window",
             preload: {
               js: "./src/renderer/windows/main/preload.ts"
-            }
+            },
+            additionalChunks: ["shared", "vueSharedComponents", "vendorVue"]
           },
           {
             html: "./src/renderer/windows/settings/index.html",
@@ -97,7 +98,8 @@ const config: ForgeConfig = {
             name: "settings_window",
             preload: {
               js: "./src/renderer/windows/settings/preload.ts"
-            }
+            },
+            additionalChunks: ["shared", "vueSharedComponents", "vendorVue"]
           },
           {
             html: "./src/renderer/windows/authorize-companion/index.html",
@@ -105,7 +107,8 @@ const config: ForgeConfig = {
             name: "authorize_companion_window",
             preload: {
               js: "./src/renderer/windows/authorize-companion/preload.ts"
-            }
+            },
+            additionalChunks: ["shared", "vueSharedComponents", "vendorVue"]
           },
           {
             name: "ytm_view",

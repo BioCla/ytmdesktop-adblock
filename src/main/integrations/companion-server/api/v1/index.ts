@@ -1,5 +1,5 @@
 import { BrowserView, BrowserWindow, ipcMain } from "electron";
-import ElectronStore from "electron-store";
+import Conf from "conf";
 import { FastifyPluginCallback, FastifyPluginOptions } from "fastify";
 import { StoreSchema } from "~shared/store/schema";
 import playerStateStore, { PlayerState, RepeatMode } from "../../../../player-state-store";
@@ -41,28 +41,28 @@ const transformPlayerState = (state: PlayerState) => {
       adPlaying: state.adPlaying,
       queue: state.queue
         ? {
-          autoplay: state.queue.autoplay,
-          items: state.queue.items,
-          automixItems: state.queue.automixItems,
-          isGenerating: state.queue.isGenerating,
-          isInfinite: state.queue.isInfinite,
-          repeatMode: state.queue.repeatMode,
-          selectedItemIndex: state.queue.selectedItemIndex
-        }
+            autoplay: state.queue.autoplay,
+            items: state.queue.items,
+            automixItems: state.queue.automixItems,
+            isGenerating: state.queue.isGenerating,
+            isInfinite: state.queue.isInfinite,
+            repeatMode: state.queue.repeatMode,
+            selectedItemIndex: state.queue.selectedItemIndex
+          }
         : null
     },
     video: state.videoDetails
       ? {
-        author: state.videoDetails.author,
-        channelId: state.videoDetails.channelId,
-        title: state.videoDetails.title,
-        album: state.videoDetails.album,
-        albumId: state.videoDetails.albumId,
-        likeStatus: state.videoDetails.likeStatus,
-        thumbnails: state.videoDetails.thumbnails,
-        durationSeconds: state.videoDetails.durationSeconds,
-        id: state.videoDetails.id
-      }
+          author: state.videoDetails.author,
+          channelId: state.videoDetails.channelId,
+          title: state.videoDetails.title,
+          album: state.videoDetails.album,
+          albumId: state.videoDetails.albumId,
+          likeStatus: state.videoDetails.likeStatus,
+          thumbnails: state.videoDetails.thumbnails,
+          durationSeconds: state.videoDetails.durationSeconds,
+          id: state.videoDetails.id
+        }
       : null,
     // API Users:
     // WARNING! WARNING! WARNING! WARNING!
@@ -76,7 +76,7 @@ const transformPlayerState = (state: PlayerState) => {
 };
 
 interface CompanionServerAPIv1Options extends FastifyPluginOptions {
-  getStore: () => ElectronStore<StoreSchema>;
+  getStore: () => Conf<StoreSchema>;
   getYtmView: () => BrowserView;
 }
 

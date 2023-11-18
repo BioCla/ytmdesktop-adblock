@@ -16,10 +16,10 @@ import {
   shell,
   Tray
 } from "electron";
-import ElectronStore from "electron-store";
+import Conf from "conf";
 import log from "electron-log";
 import path from "path";
-import { ElectronBlocker, Request } from '@cliqz/adblocker-electron';
+import { ElectronBlocker, Request } from "@cliqz/adblocker-electron";
 
 import MemoryStore from "./memory-store";
 import playerStateStore, { PlayerState, VideoState } from "./player-state-store";
@@ -297,7 +297,10 @@ function anyShortcutChanged(newState: Readonly<StoreSchema>, oldState: Readonly<
 }
 
 // Create the persistent config store
-const store = new ElectronStore<StoreSchema>({
+const store = new Conf<StoreSchema>({
+  configName: "config",
+  cwd: app.getPath("userData"),
+  projectVersion: app.getVersion(),
   watch: true,
   defaults: {
     metadata: {
@@ -880,29 +883,31 @@ function urlIsGoogleAccountsDomain(url: URL): boolean {
 }
 
 function applyAdBlocker(view: BrowserView | BrowserWindow, partition: string): void {
-  ElectronBlocker.fromPrebuiltAdsAndTracking(fetch).then((blocker) => {
-    blocker.enableBlockingInSession(view.webContents.session);
-    blocker.on('request-blocked', (request: Request) => {
-      log.warn(`[${partition}][${request.tabId}] Blocked: ${request.url}`);
+  ElectronBlocker.fromPrebuiltAdsAndTracking(fetch)
+    .then(blocker => {
+      blocker.enableBlockingInSession(view.webContents.session);
+      blocker.on("request-blocked", (request: Request) => {
+        log.warn(`[${partition}][${request.tabId}] Blocked: ${request.url}`);
+      });
+      blocker.on("request-redirected", (request: Request) => {
+        log.warn(`[${partition}][${request.tabId}] Redirected: ${request.url}`);
+      });
+      blocker.on("request-whitelisted", (request: Request) => {
+        log.warn(`[${partition}][${request.tabId}] Whitelisted: ${request.url}`);
+      });
+      blocker.on("csp-injected", (request: Request) => {
+        log.warn(`[${partition}][${request.tabId}] CSP: ${request.url}`);
+      });
+      blocker.on("script-injected", (script, url) => {
+        log.warn(`[${partition}] URL: ${url}\nScript Length: ${script.length}`);
+      });
+      blocker.on("style-injected", (style, url) => {
+        log.warn(`[${partition}] URL: ${url}\nStyle Length: ${style.length}`);
+      });
+    })
+    .finally(() => {
+      log.info(`AdBlocker enabled for ${partition}`);
     });
-    blocker.on('request-redirected', (request: Request) => {
-      log.warn(`[${partition}][${request.tabId}] Redirected: ${request.url}`);
-    })
-    blocker.on('request-whitelisted', (request: Request) => {
-      log.warn(`[${partition}][${request.tabId}] Whitelisted: ${request.url}`);
-    })
-    blocker.on('csp-injected', (request: Request) => {
-      log.warn(`[${partition}][${request.tabId}] CSP: ${request.url}`);
-    })
-    blocker.on('script-injected', (script, url) => {
-      log.warn(`[${partition}] URL: ${url}\nScript Length: ${script.length}`);
-    })
-    blocker.on('style-injected', (style, url) => {
-      log.warn(`[${partition}] URL: ${url}\nStyle Length: ${style.length}`);
-    })
-  }).finally(() => {
-    log.info(`AdBlocker enabled for ${partition}`);
-  });
 }
 
 const createYTMView = (): void => {
