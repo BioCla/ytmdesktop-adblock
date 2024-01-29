@@ -28,7 +28,9 @@ export const mainConfig: Configuration = {
   },
   plugins: [
     new DefinePlugin({
-      YTMD_DISABLE_UPDATES: true
+      YTMD_DISABLE_UPDATES: false,
+      YTMD_UPDATE_FEED_OWNER: "ytmdesktop",
+      YTMD_UPDATE_FEED_REPOSITORY: "ytmdesktop"
     })
   ],
   resolve: {
@@ -40,7 +42,7 @@ export const mainConfig: Configuration = {
   },
   devtool: process.env.NODE_ENV === "development" ? "eval-source-map" : false,
   externals: {
-    bufferutil: "bufferutil",
+    "bufferutil": "bufferutil",
     "utf-8-validate": "utf-8-validate"
   }
 };
