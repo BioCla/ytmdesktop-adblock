@@ -235,7 +235,8 @@ log.info("Created memory store");
 
 function shouldDisableUpdates() {
   // macOS can't have auto updates without a code signature
-  if (process.platform === "darwin") return true;
+  // linux is not supported on the update server https://github.com/ytmdesktop/ytmdesktop/issues/1247 (hanging issue resolved)
+  if (process.platform !== "win32") return true;
 }
 
 // Configure the autoupdater
@@ -268,6 +269,10 @@ if (app.isPackaged && !shouldDisableUpdates() && !YTMD_DISABLE_UPDATES) {
     memoryStore.set("appUpdateDownloaded", true);
     if (appLaunchUpdateCheck) autoUpdater.quitAndInstall();
     if (settingsWindow) settingsWindow.webContents.send("app:updateDownloaded");
+  });
+  autoUpdater.on("error", () => {
+    if (appLaunchUpdateCheck) appLaunchUpdateCheck = false;
+    if (settingsWindow) settingsWindow.webContents.send("app:updateNotAvailable");
   });
   log.info("Setup application updater");
 
@@ -1775,13 +1780,13 @@ app.on("ready", async () => {
   memoryStore.set("ytmViewLoadingStatus", "Checking for updates...");
 
   // Check for application updates
-  if (app.isPackaged && !YTMD_DISABLE_UPDATES) {
+  if (app.isPackaged && !shouldDisableUpdates() && !YTMD_DISABLE_UPDATES) {
+    autoUpdater.checkForUpdates();
     await new Promise<void>(resolve => {
       setInterval(() => {
         if (!appLaunchUpdateCheck) resolve();
       }, 250);
     });
-    autoUpdater.checkForUpdates();
   } else {
     appLaunchUpdateCheck = false;
   }
